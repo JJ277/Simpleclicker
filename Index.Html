@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" href="styles/style.css"/>
+  <title>Hello, World!</title>
+  <h1>
+    <p id="Clickcount">0</>
+  </h1>
+</head>
+<body>
+  <h1>
+     <button id="Btn1" onclick="add()">+</button>
+    <br>
+    <button id="CMB" onclick="multiply()">Points per click×2 price=10</button>
+    <br>
+    <button id="BAC" onclick="BuyAC()">buy autoclicker price=10</button>
+    <br>
+    <button onclick="ACS">Faster clickers</button>
+    <button onclick="savegame()">save</button>
+    <script>
+    let price=10
+    let clicks=0
+    let CM=1
+    let Autoclick=0
+    let ACprice=10
+    let ACWT=1000
+    let CSprice=10
+    function add(){
+      clicks += CM
+      document.getElementById("Clickcount").innerHTML = +clicks
+    }
+    function multiply(){
+      
+      if (clicks>=price){
+        clicks -= price
+      CM *= 2
+      price *= 2
+      }     
+      document.getElementById("Clickcount").innerHTML = +clicks
+      document.getElementById("CMB").innerHTML = "Points per click×2 price=" +price
+    }
+      function BuyAC() {
+      if (clicks>=ACprice){
+      clicks -= ACprice
+      Autoclick++
+      ACprice *= 2
+      document.getElementById("Clickcount").innerHTML = +clicks
+      document.getElementById("BAC").innerHTML = "buy autoclicker price=" +ACprice
+      }
+      }
+      function ACadd(){
+        clicks += Autoclick
+        document.getElementById("Clickcount").innerHTML = +clicks
+      } 
+      function ACS() {
+        if (clicks>=CSprice) {
+          clicks -= CSprice
+        ACWT -=50
+          CSprice *= 3
+          document.getElementById("Clickcount").innerHTML = +clicks
+      }
+      }
+    function savegame(){
+      var gamesave = {
+        clicks: clicks,
+        price: price,
+        CM: CM
+      }
+      localStorage.setItem("gamesave", JSON.Stringify(gamesave))
+    }
+    function loadgame(){
+      var savedgame = JSON.parse(localStorage.getItem("gamesave"))
+    }
+    window.onload = function(){
+      loadgame()
+      document.getElementById("Clickcount").innerHTML = +clicks
+      document.getElementById("CMB").innerHTML = "Points per click×2 price=" +price
+    }
+    setInterval (function() {
+      savegame()    
+    }, 20000 )
+    setInterval (function() {
+      ACadd()    
+    }, 1000 )
+    </script>
+  </h1>
+</body>
+</html>
