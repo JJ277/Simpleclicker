@@ -5,27 +5,45 @@
   <meta http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8">
   <link rel="stylesheet" href="styles/style.css"/>
   <style>
-  #Btn1 {
+  #Btn1{
     font-size: 200px;
     height: 255px;
     width: 255px;
-background-color: #34abeb;
+    background-color: #34abeb;
   }
   #CMB{
     font-size: 150px;
     height: 510px;
     width: 1140px;
-background-color: #34abeb;
+    background-color: #34abeb;
   }
   #Clickcount{
     font-size: 300px;
   }
   #BAC {
-font-size: 150px;
     height: 510px;
-    width: 875px;   
-  background-color: #34abeb;
-}
+    width: 875px;
+    font-size: 150px;
+    background-color: #34abeb;
+  }
+  #BGMA {
+    height: 510px;
+    width:585px;
+    font-size: 150px;
+    background-color: #34abeb;
+  }
+  .shop {
+    display: none;
+  }
+  .Shopopen{
+    display: initial;
+  }
+  #Shoptoggle {
+  height: 255px;
+  width: 405px;
+  font-size: 150px;
+    background-color: #34abeb;
+  }
   
   
   </style>
@@ -36,31 +54,45 @@ font-size: 150px;
 </head>
 <body>
   <h1>
-     <button id="Btn1" onclick="add()">+</button>
+    <button id="Btn1" onclick="add()">+</button>
     <br>
+    <div id="shop" class="Shopopen">
     <button id="CMB" onclick="multiply()">Points per click×2 price=10</button>
     <br>
     <button id="BAC" onclick="BuyAC()">buy autoclicker price=10</button>
     <br>
-    <button onclick="savegame()">save</button>
+    <button id="BGMA"onclick="BuyGma()">buy Gma price=20</button>
+    </div>
+    <button id="Shoptoggle" onclick="toggleshop()">Shop</button>
     <script>
+    let gmas=0
+    let gmaprice=20
     let price=10
     let clicks=0
     let CM=1
     let Autoclick=0
     let ACprice=10
-    let ACWT=1000
-    let CSprice=10
+    let ACWT=0
+    let CSprice=100
+    let ACSI=500
     function add(){
       clicks += CM
       document.getElementById("Clickcount").innerHTML = +clicks
     }
+    function toggleshop(){
+      var x = document.getElementById("shop");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
     function multiply(){
       
       if (clicks>=price){
         clicks -= price
       CM *= 2
-      price *= 2
+      price *= Math.round(CM / 1.15)
       }     
       document.getElementById("Clickcount").innerHTML = +clicks
       document.getElementById("CMB").innerHTML = "Points per click×2 price=" +price
@@ -74,6 +106,16 @@ font-size: 150px;
       document.getElementById("BAC").innerHTML = "buy autoclicker price=" +ACprice
       }
       }
+    function BuyGma() {
+      if (clicks>=gmaprice){
+      clicks -= gmaprice
+      Autoclick += 2
+      gmas++
+      gmaprice *= Math.round(gmas / 1.15)
+      document.getElementById("Clickcount").innerHTML = +clicks
+      document.getElementById("BGMA").innerHTML = "buy Gma price=" +gmaprice
+      }
+      }
       function ACadd(){
         clicks += Autoclick
         document.getElementById("Clickcount").innerHTML = +clicks
@@ -81,10 +123,8 @@ font-size: 150px;
       function ACS() {
         if (clicks>=CSprice) {
           clicks -= CSprice
-        ACWT -=50
-          CSprice *= 3
-          document.getElementById("Clickcount").innerHTML = +clicks
-      }
+          ACWT += ACSI
+        }
       }
     function savegame(){
       var gamesave = {
@@ -107,7 +147,7 @@ font-size: 150px;
     }, 20000 )
     setInterval (function() {
       ACadd()    
-    }, 1000 )
+    },1000 - ACWT )
     </script>
   </h1>
 </body>
