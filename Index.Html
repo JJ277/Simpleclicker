@@ -44,6 +44,12 @@
   font-size: 150px;
     background-color: #34abeb;
   }
+  #PrestigeBtn {
+    height: 510px;
+    width: 1140px;
+    font-size: 150px;
+    background-color: #99ffff
+  }
   
   
   </style>
@@ -61,7 +67,9 @@
     <br>
     <button id="BAC" onclick="BuyAC()">buy autoclicker price=10</button>
     <br>
-    <button id="BGMA"onclick="BuyGma()">buy artist price=20</button>
+    <button id="BGMA"onclick="BuyGma()">buy artist-price=20</button>
+      <br>
+      <button id="PrestigeBtn" onclick="Prestige()">Prestige for ©100,000,000</button>
     </div>
     <button id="Shoptoggle" onclick="toggleshop()">Shop</button>
     <script>
@@ -75,10 +83,11 @@
     let ACWT=0
     let CSprice=100
     let ACSI=500
+    let Pprice=100000000
     function add(){
-      clicks += CM
-      document.getElementById("Clickcount").innerHTML = +clicks
-    }
+      clicks += CM;
+      document.getElementById("Clickcount").innerHTML = +clicks;
+    };
     function toggleshop(){
       var x = document.getElementById("shop");
   if (x.style.display === "none") {
@@ -113,7 +122,7 @@
       gmas++
       gmaprice *= Math.round(gmas / 1.15)
       document.getElementById("Clickcount").innerHTML = +clicks
-      document.getElementById("BGMA").innerHTML = "buy artist price=" +gmaprice
+      document.getElementById("BGMA").innerHTML = "buy artist-price=" +gmaprice
       }
       }
       function ACadd(){
@@ -126,6 +135,13 @@
           ACWT += ACSI
         }
       }
+    function prestige(){
+      if (clicks>=Pprice) {
+          clicks -= Pprice
+        clicks -= clicks
+        Autoclick -= Autoclick
+      }
+    }
     function savegame(){
       var gamesave = {
         clicks: clicks,
@@ -147,7 +163,7 @@
     }, 20000 )
     setInterval (function() {
       ACadd()    
-    },1000 - ACWT )
+    },1000 )
     </script>
   </h1>
 </body>
