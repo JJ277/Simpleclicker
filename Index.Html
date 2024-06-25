@@ -50,7 +50,12 @@
     font-size: 150px;
     background-color: #99ffff
   }
-  
+  #BPF {
+    height: 510px;
+    width: 720px;
+    font-size: 150px;
+    background-color: #34abeb;
+  }
   
   </style>
   <title>color clicker</title>
@@ -69,6 +74,8 @@
     <br>
     <button id="BGMA"onclick="BuyGma()">buy artist-price=20</button>
       <br>
+      <button id="BPF" onclick="BuyPF()">Paint factory price=100</button>
+      <br>
       <button id="PrestigeBtn" onclick="Prestige()">Prestige for ©100,000,000</button>
     </div>
     <button id="Shoptoggle" onclick="toggleshop()">Shop</button>
@@ -83,7 +90,9 @@
     let ACWT=0
     let CSprice=100
     let ACSI=500
-    let Pprice=100000000
+    let Pprice=100000
+    let PFP=100
+    let PFB=0
     function add(){
       clicks += CM;
       document.getElementById("Clickcount").innerHTML = +clicks;
@@ -106,6 +115,14 @@
       document.getElementById("Clickcount").innerHTML = +clicks
       document.getElementById("CMB").innerHTML = "Points per click×2 price=" +price
     }
+    function BuyPF() {
+        if (clicks>=PFP) {
+          clicks -= PFP
+          Autoclick += 10
+          PFP *= 2
+          document.getElementById("BPF").innerHTML = "Paint Factory price=" +PFP
+        }
+      }
       function BuyAC() {
       if (clicks>=ACprice){
       clicks -= ACprice
@@ -140,7 +157,6 @@
           clicks -= Pprice
         clicks -= clicks
         Autoclick -= Autoclick
-CM *= 2
       }
     }
     function savegame(){
