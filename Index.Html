@@ -93,8 +93,9 @@
     let Pprice=100000
     let PFP=100
     let PFB=0
+let PresMultiplier=1
     function add(){
-      clicks += CM;
+      clicks += CM * PresMultiplier;
       document.getElementById("Clickcount").innerHTML = +clicks;
     };
     function toggleshop(){
