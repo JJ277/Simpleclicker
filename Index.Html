@@ -48,7 +48,7 @@
     height: 510px;
     width: 1140px;
     font-size: 150px;
-    background-color: #99ffff
+    background-color: #ff99ff
   }
   #BPF {
     height: 510px;
@@ -56,7 +56,32 @@
     font-size: 150px;
     background-color: #34abeb;
   }
-  
+  .pink {
+    display: none;
+  }
+  PBtn1{
+    font-size: 200px;
+    height: 255px;
+    width: 255px;
+    background-color: #ff99ff;
+  }
+  #PCMB{
+    font-size: 150px;
+    height: 510px;
+    width: 1140px;
+    background-color: #ff99ff;
+  }
+  #BPAC {
+    height: 510px;
+    width: 875px;
+    font-size: 150px;
+    background-color: #ff99ff;
+  }
+  #BPGMA {
+    height: 510px;
+    width:585px;
+    font-size: 150px;
+    background-color: #ff99ff;
   </style>
   <title>color clicker</title>
   <h1>
@@ -76,7 +101,21 @@
       <br>
       <button id="BPF" onclick="BuyPF()">Paint factory price=100</button>
       <br>
-      <button id="PrestigeBtn" onclick="Prestige()">Prestige for ©10,000</button>
+      <br>
+      <button id="PrestigeBtn" onclick="Prestige()">Buy pink 100,000</button>
+    </div>
+    <div class="pink">
+    <button id="PBtn1" onclick="Padd()">+</button>
+    <br>
+    <button id="PCMB" onclick="PMultiply()">Points per click×2 price=10</button>
+    <br>
+    <button id="BPAC" onclick="BuyPAC()">buy autoclicker price=10</button>
+    <br>
+    <button id="BPGMA"onclick="BuyPGma()">buy artist price=20</button>
+      <br>
+      <button id="BPPF" onclick="BuyPPF()"> Pink Paint factory price=100</button>
+      <br>
+      <br>
     </div>
     <button id="Shoptoggle" onclick="toggleshop()">Shop</button>
     <script>
@@ -90,12 +129,14 @@
     let ACWT=0
     let CSprice=100
     let ACSI=500
-    let Pprice=10000
+    let Pprice=15
     let PFP=100
     let PFB=0
-let PresMultiplier=1
+let PPFP=150
+let PACP=20
+let PGmaP= 40
     function add(){
-      clicks += CM * PresMultiplier;
+      clicks += CM;
       document.getElementById("Clickcount").innerHTML = +clicks;
     };
     function toggleshop(){
@@ -106,6 +147,16 @@ let PresMultiplier=1
     x.style.display = "none";
   }
 }
+    function togglepink(){
+      var x = document.getElementById("pink");
+      if (clicks -= 100000){
+        clicks -= 100000
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+      }
     function multiply(){
       
       if (clicks>=price){
@@ -153,18 +204,33 @@ let PresMultiplier=1
           ACWT += ACSI
         }
       }
-    function Prestige(){
+    function PMultiply(){
       if (clicks>=Pprice) {
           clicks -= Pprice
-        clicks -= clicks
-        Autoclick -= Autoclick
-        CM /= CM
-PresMultiplier *= 2
-gmaprice -= gmaprice - 20
-price -= price - 10
-ACprice -= ACprice - 10
+        CM *= 3
+Pprice *= 2
       }
     }
+function BuyPPF() {
+if (clicks>=PPFP) {
+clicks -= PPFP
+PPFP *= 2
+Autoclick += 20
+}
+}
+function BuyPAC {
+If (clicks>=PACP) {
+clicks -= PACP
+Autoclick += 2
+}
+}
+function BuyPGma() {
+if (clicks>=PGmaP) {
+clicks -= PGmaP
+PgmaP *= 2
+Autoclick += 4
+}
+}
     function savegame(){
       var gamesave = {
         clicks: clicks,
