@@ -105,7 +105,7 @@
       <button id="PrestigeBtn" onclick="Prestige()">Buy pink 100,000</button>
     </div>
     <div class="pink">
-    <button id="PBtn1" onclick="Padd()">+</button>
+    <button id="PBtn1" onclick="add()">+</button>
     <br>
     <button id="PCMB" onclick="PMultiply()">Points per click×2 price=10</button>
     <br>
@@ -134,8 +134,9 @@
     let PFB=0
 let PPFP=150
 let PACP=20
-let PGmaP= 40
-    function add(){
+let PGmaP=40
+    let pinkbought=0
+    function add() {
       clicks += CM;
       document.getElementById("Clickcount").innerHTML = +clicks;
     };
@@ -149,16 +150,19 @@ let PGmaP= 40
 }
     function togglepink(){
       var x = document.getElementById("pink");
-      if (clicks -= 100000){
+      if (clicks >= 100000){
         clicks -= 100000
+        pinkbought += 1
+        if (pinkbought < 1) {
   if (x.style.display === "none") {
     x.style.display = "block";
   } else {
     x.style.display = "none";
   }
       }
-    function multiply(){
-      
+    }
+    }
+    function multiply(){     
       if (clicks>=price){
         clicks -= price
       CM *= 2
@@ -208,7 +212,7 @@ let PGmaP= 40
       if (clicks>=Pprice) {
           clicks -= Pprice
         CM *= 3
-Pprice *= 2
+        Pprice *= 2
       }
     }
 function BuyPPF() {
@@ -218,8 +222,8 @@ PPFP *= 2
 Autoclick += 20
 }
 }
-function BuyPAC {
-If (clicks>=PACP) {
+function BuyPAC() {
+if (clicks>=PACP) {
 clicks -= PACP
 Autoclick += 2
 }
@@ -229,16 +233,8 @@ if (clicks>=PGmaP) {
 clicks -= PGmaP
 PgmaP *= 2
 Autoclick += 4
+ }
 }
-}
-    function savegame(){
-      var gamesave = {
-        clicks: clicks,
-        price: price,
-        CM: CM
-      }
-      localStorage.setItem("gamesave", JSON.Stringify(gamesave))
-    }
     function loadgame(){
       var savedgame = JSON.parse(localStorage.getItem("gamesave"))
     }
@@ -247,9 +243,6 @@ Autoclick += 4
       document.getElementById("Clickcount").innerHTML = +clicks
       document.getElementById("CMB").innerHTML = "Points per click×2 price=" +price
     }
-    setInterval (function() {
-      savegame()    
-    }, 20000 )
     setInterval (function() {
       ACadd()    
     },1000 )
