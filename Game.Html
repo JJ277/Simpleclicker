@@ -33,9 +33,9 @@
 
         const ENEMY_SIZE = 50;
         let enemies = [];
-        let enemySpeed = 2;
-        const SPEED_INCREMENT = 0.1;
-        const NEW_ENEMY_INTERVAL = 2000; // in milliseconds
+        let enemySpeed = 5; // Increased initial speed
+        const SPEED_INCREMENT = 0.2; // Faster increment
+        const NEW_ENEMY_INTERVAL = 1000; // Shorter interval for new enemies
 
         let score = 0;
         let gameOver = false;
@@ -115,10 +115,10 @@
 
         document.addEventListener('keydown', (e) => {
             if (e.code === 'ArrowLeft' && playerPos.x > 0) {
-                playerPos.x -= 10;
+                playerPos.x -= 15; // Increased player speed
             }
             if (e.code === 'ArrowRight' && playerPos.x < canvas.width - PLAYER_SIZE) {
-                playerPos.x += 10;
+                playerPos.x += 15; // Increased player speed
             }
         });
 
