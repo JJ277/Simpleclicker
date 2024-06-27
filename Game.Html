@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hardest 2D Game</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black;
+        }
+
+        canvas {
+            border: 1px solid white;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas"></canvas>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = 800;
+        canvas.height = 600;
+
+        const PLAYER_SIZE = 50;
+        let playerPos = { x: canvas.width / 2 - PLAYER_SIZE / 2, y: canvas.height - 2 * PLAYER_SIZE };
+
+        const ENEMY_SIZE = 50;
+        let enemies = [];
+        let enemySpeed = 2;
+        const SPEED_INCREMENT = 0.1;
+        const NEW_ENEMY_INTERVAL = 2000; // in milliseconds
+
+        let score = 0;
+        let gameOver = false;
+
+        function drawPlayer() {
+            ctx.fillStyle = 'white';
+            ctx.fillRect(playerPos.x, playerPos.y, PLAYER_SIZE, PLAYER_SIZE);
+        }
+
+        function createEnemy() {
+            const x = Math.random() * (canvas.width - ENEMY_SIZE);
+            const y = 0;
+            enemies.push({ x, y });
+        }
+
+        function drawEnemies() {
+            ctx.fillStyle = 'red';
+            enemies.forEach(enemy => {
+                ctx.fillRect(enemy.x, enemy.y, ENEMY_SIZE, ENEMY_SIZE);
+            });
+        }
+
+        function updateEnemies() {
+            enemies.forEach(enemy => {
+                enemy.y += enemySpeed;
+            });
+            enemies = enemies.filter(enemy => enemy.y < canvas.height);
+        }
+
+        function detectCollision(player, enemy) {
+            return player.x < enemy.x + ENEMY_SIZE &&
+                   player.x + PLAYER_SIZE > enemy.x &&
+                   player.y < enemy.y + ENEMY_SIZE &&
+                   player.y + PLAYER_SIZE > enemy.y;
+        }
+
+        function checkCollisions() {
+            for (let enemy of enemies) {
+                if (detectCollision(playerPos, enemy)) {
+                    gameOver = true;
+                }
+            }
+        }
+
+        function updateScore() {
+            score++;
+            if (score % 100 === 0) {
+                enemySpeed += SPEED_INCREMENT;
+            }
+        }
+
+        function drawScore() {
+            ctx.fillStyle = 'white';
+            ctx.font = '20px Arial';
+            ctx.fillText('Score: ' + score, canvas.width - 120, 30);
+        }
+
+        function gameLoop() {
+            if (gameOver) {
+                ctx.fillStyle = 'red';
+                ctx.font = '50px Arial';
+                ctx.fillText('Game Over', canvas.width / 2 - 150, canvas.height / 2);
+                return;
+            }
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            drawPlayer();
+            drawEnemies();
+            updateEnemies();
+            checkCollisions();
+            updateScore();
+            drawScore();
+
+            requestAnimationFrame(gameLoop);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'ArrowLeft' && playerPos.x > 0) {
+                playerPos.x -= 10;
+            }
+            if (e.code === 'ArrowRight' && playerPos.x < canvas.width - PLAYER_SIZE) {
+                playerPos.x += 10;
+            }
+        });
+
+        setInterval(createEnemy, NEW_ENEMY_INTERVAL);
+        gameLoop();
+    </script>
+</body>
+</html>
