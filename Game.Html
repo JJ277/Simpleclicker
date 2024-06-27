@@ -33,12 +33,15 @@
 
         const ENEMY_SIZE = 50;
         let enemies = [];
-        let enemySpeed = 1; // Increased initial speed
-        const SPEED_INCREMENT = 5; // Faster increment
-        const NEW_ENEMY_INTERVAL = 125; // Shorter interval for new enemies
+        let enemySpeed = 5; // Increased initial speed
+        const SPEED_INCREMENT = 0.2; // Faster increment
+        const NEW_ENEMY_INTERVAL = 1000; // Shorter interval for new enemies
 
         let score = 0;
         let gameOver = false;
+        const gameTime = 69; // 69 seconds
+        let timeLeft = gameTime;
+        let startTime = Date.now();
 
         function drawPlayer() {
             ctx.fillStyle = 'white';
@@ -82,7 +85,7 @@
 
         function updateScore() {
             score++;
-            if (score % 50 === 0) {
+            if (score % 100 === 0) {
                 enemySpeed += SPEED_INCREMENT;
             }
         }
@@ -93,11 +96,25 @@
             ctx.fillText('Score: ' + score, canvas.width - 120, 30);
         }
 
+        function drawTimer() {
+            const currentTime = Date.now();
+            timeLeft = gameTime - Math.floor((currentTime - startTime) / 1000);
+
+            if (timeLeft <= 0) {
+                timeLeft = 0;
+                gameOver = true;
+            }
+
+            ctx.fillStyle = 'white';
+            ctx.font = '20px Arial';
+            ctx.fillText('Time Left: ' + timeLeft + 's', 10, 30);
+        }
+
         function gameLoop() {
             if (gameOver) {
-                ctx.fillStyle = 'red';
+                ctx.fillStyle = timeLeft === 0 ? 'green' : 'red';
                 ctx.font = '50px Arial';
-                ctx.fillText('Game Over', canvas.width / 2 - 150, canvas.height / 2);
+                ctx.fillText(timeLeft === 0 ? 'You Win!' : 'Game Over', canvas.width / 2 - 150, canvas.height / 2);
                 return;
             }
 
@@ -109,16 +126,17 @@
             checkCollisions();
             updateScore();
             drawScore();
+            drawTimer();
 
             requestAnimationFrame(gameLoop);
         }
 
         document.addEventListener('keydown', (e) => {
             if (e.code === 'ArrowLeft' && playerPos.x > 0) {
-                playerPos.x -= 25; // Increased player speed
+                playerPos.x -= 15; // Increased player speed
             }
             if (e.code === 'ArrowRight' && playerPos.x < canvas.width - PLAYER_SIZE) {
-                playerPos.x += 25; // Increased player speed
+                playerPos.x += 15; // Increased player speed
             }
         });
 
