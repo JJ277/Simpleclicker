@@ -115,10 +115,10 @@
 
         document.addEventListener('keydown', (e) => {
             if (e.code === 'ArrowLeft' && playerPos.x > 0) {
-                playerPos.x -= 15; // Increased player speed
+                playerPos.x -= 25; // Increased player speed
             }
             if (e.code === 'ArrowRight' && playerPos.x < canvas.width - PLAYER_SIZE) {
-                playerPos.x += 15; // Increased player speed
+                playerPos.x += 25; // Increased player speed
             }
         });
 
