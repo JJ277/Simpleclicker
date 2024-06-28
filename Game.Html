@@ -34,12 +34,12 @@
         const ENEMY_SIZE = 50;
         let enemies = [];
         let enemySpeed = 5; // Increased initial speed
-        const SPEED_INCREMENT = 2; // Faster increment
-        const NEW_ENEMY_INTERVAL = 1; // Shorter interval for new enemies
+        const SPEED_INCREMENT = 0.2; // Faster increment
+        const NEW_ENEMY_INTERVAL = 1000; // Shorter interval for new enemies
 
         let score = 0;
         let gameOver = false;
-        const gameTime = 34.5; // 69 seconds
+        const gameTime = 60; // 69 seconds
         let timeLeft = gameTime;
         let startTime = Date.now();
 
@@ -85,7 +85,7 @@
 
         function updateScore() {
             score++;
-            if (score % 25 === 0) {
+            if (score % 100 === 0) {
                 enemySpeed += SPEED_INCREMENT;
             }
         }
